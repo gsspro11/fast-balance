@@ -37,12 +37,8 @@ message BalanceResponse {
 }
 
 message Balance {
-  string description = 1;
-  string date = 2;
-  double value = 3;
-  string type = 4;
-  string retrievalReferenceNumber = 5;
-  Product product = 6;
+  double value = 1;
+  Product product = 2;
 }
 
 message Product {

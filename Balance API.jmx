@@ -24,7 +24,7 @@
       <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group">
         <boolProp name="ThreadGroup.delayedStart">true</boolProp>
-        <intProp name="ThreadGroup.num_threads">1000</intProp>
+        <intProp name="ThreadGroup.num_threads">10</intProp>
         <intProp name="ThreadGroup.ramp_time">1</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">false</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">stoptestnow</stringProp>
@@ -34,7 +34,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="REST Local - GET Get Cards for Tests">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="REST Local - GET Get Cards for Tests" enabled="true">
           <stringProp name="HTTPSampler.domain">localhost</stringProp>
           <stringProp name="HTTPSampler.port">5278</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
@@ -143,7 +143,7 @@
           </ResultCollector>
           <hashTree/>
         </hashTree>
-        <vn.zalopay.benchmark.GRPCSampler guiclass="vn.zalopay.benchmark.GRPCSamplerGui" testclass="vn.zalopay.benchmark.GRPCSampler" testname="GRPC Local - GET Balance By Card">
+        <vn.zalopay.benchmark.GRPCSampler guiclass="vn.zalopay.benchmark.GRPCSamplerGui" testclass="vn.zalopay.benchmark.GRPCSampler" testname="GRPC Local - GET Balance By Card" enabled="true">
           <stringProp name="GRPCSampler.protoFolder">C:\Users\gsdasilva\source\personal-projects\fast-balance\balance-api\src\Api\Protos</stringProp>
           <stringProp name="GRPCSampler.libFolder">C:\Users\gsdasilva\source\personal-projects\fast-balance\balance-api\src\Api</stringProp>
           <stringProp name="GRPCSampler.metadata"></stringProp>
@@ -200,7 +200,7 @@
           </ResultCollector>
           <hashTree/>
         </hashTree>
-        <vn.zalopay.benchmark.GRPCSampler guiclass="vn.zalopay.benchmark.GRPCSamplerGui" testclass="vn.zalopay.benchmark.GRPCSampler" testname="GRPC Local - GET Statement By Card">
+        <vn.zalopay.benchmark.GRPCSampler guiclass="vn.zalopay.benchmark.GRPCSamplerGui" testclass="vn.zalopay.benchmark.GRPCSampler" testname="GRPC Local - GET Statement By Card" enabled="true">
           <stringProp name="GRPCSampler.protoFolder">C:\Users\gsdasilva\source\personal-projects\fast-balance\statement-api\src\Api\Protos</stringProp>
           <stringProp name="GRPCSampler.libFolder">C:\Users\gsdasilva\source\personal-projects\fast-balance\statement-api\src\Api</stringProp>
           <stringProp name="GRPCSampler.metadata"></stringProp>

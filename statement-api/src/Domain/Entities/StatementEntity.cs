@@ -1,3 +1,6 @@
+using System.Text.Json.Serialization;
+using Domain.Helpers;
+
 namespace Domain.Entities;
 
 public class StatementEntity
@@ -12,6 +15,7 @@ public class StatementEntity
         set => _description = value ?? string.Empty;
     }
 
+    [JsonConverter(typeof(CustomDateTimeConverter))]
     public DateTime Date { get; set; }
 
     public decimal Value { get; set; }
@@ -28,5 +32,5 @@ public class StatementEntity
         set => _retrievalReferenceNumber = value ?? string.Empty;
     }
 
-    public required ProductEntity Product { get; set; }
+    public ProductEntity? Product { get; set; }
 }

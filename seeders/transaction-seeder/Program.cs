@@ -30,8 +30,8 @@ namespace TransactionSeeder
             using var cts = new CancellationTokenSource();
             var cancellationToken = cts.Token;
 
-            const int totalTransactions = 1500; // Adjust batch size for testing
-            const int batchSize = 100; // Number of transactions per batch
+            const int totalTransactions = 10000; // Adjust batch size for testing
+            const int batchSize = 1000; // Number of transactions per batch
             var random = new Random();
 
             await using var dbConnection = new NpgsqlConnection(ConnectionString);
@@ -115,10 +115,10 @@ namespace TransactionSeeder
                                AND transaction_date >= CURRENT_DATE - INT '90'
                             ORDER BY transaction_date DESC;
                             """,
-                        (balance, product) =>
+                        (transaction, product) =>
                         {
-                            balance.Product = product;
-                            return balance;
+                            transaction.Product = product;
+                            return transaction;
                         },
                         new { accountAndCardId.AccountId },
                         splitOn: "code")).ToList();

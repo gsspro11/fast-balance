@@ -11,7 +11,7 @@ public class StatementRepositoryV1(IPostgresDbContext dbContext) : IStatementRep
         CancellationToken cancellationToken)
     {
         const string query = """
-                             SELECT balances
+                             SELECT statements
                                FROM fast_balance_v1.balance_statement_summaries
                               WHERE card_number = @CardNumber
                              """;
@@ -31,7 +31,7 @@ public class StatementRepositoryV1(IPostgresDbContext dbContext) : IStatementRep
         var result = new List<StatementEntity>();
         
         const string query = """
-                             SELECT balances
+                             SELECT statements
                                FROM fast_balance_v1.balance_statement_summaries
                               WHERE customer_identification = @CustomerIdentification
                              """;
@@ -52,13 +52,13 @@ public class StatementRepositoryV1(IPostgresDbContext dbContext) : IStatementRep
             }
         }
 
-        return result.Where(x => x.Product.Code == productCode);
+        return result.Where(x => x.Product?.Code == productCode);
     }
 
     public async Task<IEnumerable<StatementEntity>> GetByCardAsync(string cardNumber, CancellationToken cancellationToken)
     {
         const string query = """
-                             SELECT balances
+                             SELECT statements
                                FROM fast_balance_v1.balance_statement_summaries
                               WHERE card_number = @CardNumber
                              """;
@@ -77,7 +77,7 @@ public class StatementRepositoryV1(IPostgresDbContext dbContext) : IStatementRep
         var result = new List<StatementEntity>();
 
         const string query = """
-                             SELECT balances
+                             SELECT statements
                               FROM fast_balance_v1.balance_statement_summaries
                              WHERE card_number = @CardNumber
                              """;
@@ -98,6 +98,6 @@ public class StatementRepositoryV1(IPostgresDbContext dbContext) : IStatementRep
             }
         }
 
-        return result.Where(x => x.Product.Code == productCode);
+        return result.Where(x => x.Product?.Code == productCode);
     }
 }
