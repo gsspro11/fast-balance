@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+option csharp_namespace = "Api.BalanceServices";
+
+import "google/api/annotations.proto";
+
+package balanceservices;
+
+service FastBalance {
+  rpc GetByIdentificationAsync (GetByIdentificationRequest) returns (BalanceResponse){
+    option (google.api.http) = {
+      get: "/v1/accounts/{customerIdentification}"
+    };
+  }
+
+  rpc GetByIdentificationAndProductAsync (GetByIdentificationAndProductRequest) returns (BalanceResponse){
+    option (google.api.http) = {
+      get: "/v1/accounts/{customerIdentification}/products/{productCode}"
+    };
+  }
+
+  rpc GetByCardAsync (GetByCardRequest) returns (BalanceResponse){
+    option (google.api.http) = {
+      get: "/v1/accounts/cards/{cardNumber}/products"
+    };
+  }
+
+  rpc GetByCardAndProductAsync (GetByCardAndProductRequest) returns (BalanceResponse){
+    option (google.api.http) = {
+      get: "/v1/accounts/cards/{cardNumber}/products/{productCode}"
+    };
+  }
+}
+
+message BalanceResponse {
+  repeated Balance balances = 1;
+}
+
+message Balance {
+  string description = 1;
+  string date = 2;
+  double value = 3;
+  string type = 4;
+  string retrievalReferenceNumber = 5;
+  Product product = 6;
+}
+
+message Product {
+  string description = 1;
+  int32 code = 2;
+  string type = 3;
+}
+
+message GetByIdentificationRequest {
+  int64 customerIdentification = 1;
+}
+
+message GetByIdentificationAndProductRequest {
+  int64 customerIdentification = 1;
+  int32 productCode = 2;
+}
+
+message GetByCardRequest {
+  string cardNumber = 1;
+}
+
+message GetByCardAndProductRequest {
+  string cardNumber = 1;
+  int32 productCode = 2;
+}

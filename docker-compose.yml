@@ -1,0 +1,84 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=S@ntos1631
+    volumes:
+      - ./.containers/db:/var/lib/postgresql/data
+    ports:
+      - 32768:5432
+    networks:
+      - balance-otel
+
+  transaction.seeder:
+    image: ${DOCKER_REGISTRY-}transaction.seeder
+    container_name: transaction.seeder
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: seeders/transaction-seeder/Dockerfile
+    networks:
+      - balance-otel
+  
+  getdata.api:
+    image: ${DOCKER_REGISTRY-}getdata.api
+    container_name: getdata.api
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: seeders/get-data-api/Dockerfile
+    ports:
+      - 5277:8080
+      - 5278:8081
+    networks:
+      - balance-otel
+  
+  balance.api:
+    image: ${DOCKER_REGISTRY-}balance.api
+    container_name: balance.api
+    depends_on:
+      - postgres   
+    build:
+      context: .
+      dockerfile: balance-api/src/Api/Dockerfile
+    ports:
+      - 8080:8080
+      - 8081:8081
+    environment:
+      - OTEL_SERVICE_NAME=balance.api
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://balanceapi.dashboard:18889
+    networks:
+      - balance-otel
+        
+  statement.api:
+    image: ${DOCKER_REGISTRY-}statement.api
+    container_name: statement.api
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: statement-api/src/Api/Dockerfile
+    ports:
+      - 7725:8080
+      - 7726:8081
+    environment:
+      - OTEL_SERVICE_NAME=statement.api
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://balanceapi.dashboard:18889
+    networks:
+      - balance-otel
+  
+  balanceapi.dashboard:
+    image: mcr.microsoft.com/dotnet/nightly/aspire-dashboard:latest
+    container_name: balanceapi.dashboard
+    ports:
+      - 18888:18888
+    networks:
+      - balance-otel
+
+networks:
+  balance-otel:
